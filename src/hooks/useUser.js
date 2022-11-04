@@ -3,16 +3,20 @@ import { getUserDataService } from "../services";
 
 
 const useUser = (id) => {
-    const [user, setUser] = useState(null);
+    const [user2, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const loadUser = async () => {
             try {
                 setLoading(true);
                 const data = await getUserDataService(id);
+
                 setUser(data);
+
+                //console.log(data); correcto
+
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -21,7 +25,7 @@ const useUser = (id) => {
         };
         loadUser();
     }, [id]);
-    return { user, loading, error };
+    return { user2, loading, error };
 };
 export default useUser;
-//este hook me da la info un usuario 
+//este hook me da la info un usuario cualquiera(user2)

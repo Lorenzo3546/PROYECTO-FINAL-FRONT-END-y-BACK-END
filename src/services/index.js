@@ -21,21 +21,10 @@ export const getPostsUserService = async (id) => {
     if (!response.ok) {
         throw new Error(json.message);
     }
+
     return json.data;
 };
 
-
-/* export const getSinglePostService = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/post/${id}`);
-
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw new Error(json.message);
-    }
-    return json.data;
-
-}; */
 
 export const registerUserService = async ({ email, password, nick }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/user`, {
@@ -87,17 +76,6 @@ export const getMyUserDataService = async ({ token }) => {
     return json.data;
 };
 
-//permite leer los datos de cualquier usuario
-export const getUserDataService = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info/${id}`);
-
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw new Error(json.message);
-    }
-    return json.data;
-};
 
 
 export const sendPostService = async ({ data, token }) => {
@@ -114,8 +92,12 @@ export const sendPostService = async ({ data, token }) => {
     if (!response.ok) {
         throw new Error(json.message);
     }
+
+    //console.log(json);
     return json.data;
+
 };
+//devuelve el nuevo post con su info, que ya lo usamos sin tener que recargar la pag!
 
 
 export const deletePostService = async ({ id, token }) => {
@@ -132,5 +114,41 @@ export const deletePostService = async ({ id, token }) => {
     }
 
     //no devolvemos nada
-}
+};
 
+export const putModifyUserService = async ({ password, nick, token }) => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info`, {
+        method: "PUT",
+        headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password, nick }),
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+    //return json.data;
+};
+//modifica datos pero no devolvemos nada 
+
+
+
+
+//permite leer los datos de cualquier usuario-no uso- 
+export const getUserDataService = async (id) => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info/${id}`);
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+    //console.log(json);
+    //console.log(json.data);
+    return json.data;
+
+};

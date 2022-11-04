@@ -16,10 +16,16 @@ export const NewPost = ({ addPost }) => {
 
             const data = new FormData(e.target);
             const post = await sendPostService({ data, token });
+            //este servicio manda los datos del formulario y el token
+
 
             addPost(post);
+            //console.log(post);
+
             e.target.reset();
             setImage(null);
+
+
         } catch (error) {
             setError(error.message);
         } finally {
@@ -31,12 +37,12 @@ export const NewPost = ({ addPost }) => {
             <h1>Add new Post</h1>
 
             <fieldset>
-                <label htmlFor="text">Text(optional)</label>
+                <label htmlFor="text">Text and hashtag</label>
                 <input type="text" id="text" name="text" />
             </fieldset>
 
             <fieldset>
-                <label htmlFor="image">Post</label>
+                <label htmlFor="image">Photo</label>
                 <input type="file" id="image" name="image" accept="image/*" onChange={(e) => setImage(e.target.files[0])} required />
                 {image ? <figure>
                     <img src={URL.createObjectURL(image)} alt="Preview" style={{ width: "100px" }} />
@@ -44,8 +50,10 @@ export const NewPost = ({ addPost }) => {
             </fieldset>
 
             <button>Send Post</button>
-            {sending ? <p>Sending Post</p> : null}
+            {sending ? <p>Sending Post...</p> : null}
             {error ? <p>{error}</p> : null}
         </form>
     );
 };
+
+//"multiple" para poder subir varias fotos
