@@ -26,15 +26,9 @@ export const HomePage = () => {
 
             <h1>Latest Posts</h1>
 
-            {user ? <p>aqui dar like y contador de likes</p> : null}
-            {user ? <p>aqui new comment</p> : null}
-
-
             <PostList posts={posts} removePost={removePost} />
 
         </section>
     );
 };
 
-//meter el componente en vez de p NewComment o dentro de la lista
-//
