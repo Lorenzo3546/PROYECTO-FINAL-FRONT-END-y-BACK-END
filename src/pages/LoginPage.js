@@ -8,6 +8,7 @@ export const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    //const { setToken } = useContext(AuthContext);
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 

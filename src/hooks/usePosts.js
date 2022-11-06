@@ -4,8 +4,7 @@ import { getAllPostsService, getPostsUserService } from "../services";
 const usePosts = (id) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-
+    const [error, setError] = useState('');
 
 
     useEffect(() => {
@@ -13,9 +12,8 @@ const usePosts = (id) => {
             try {
                 setLoading(true);
 
-                const data = id ?
-                    await getPostsUserService(id)
-                    : await getAllPostsService();
+                const data = id ? await getPostsUserService(id) 
+                : await getAllPostsService();
 
                 setPosts(data);
 
@@ -32,22 +30,17 @@ const usePosts = (id) => {
     const addPost = (post) => {
         setPosts([post, ...posts]);
     };
-    //dinamico: para que añada posts sin tener que recargar la pagina
+    //para que añada posts sin tener que recargar la pagina
 
     const removePost = (id) => {
         setPosts(posts.filter((post) => post.id !== id));
     };
-    //dinamico: para que elimine en post sin tener que recargar la pag.
-    //el filtro es que se queden todos los post que su id !== a la que quiero borrar
+    //actualiza el estado, deja solo los posts que no tengan la id que quiero borrar
 
-    /* const addComment = (text) => {
-        setPosts([text, ...text]); 
+    const addSearch = (results) => {
+        setPosts([results]);
     };
-    
-    const addComment = (comment) => {
-        setComments([comment, ...comments]); y poner arriba el estado
-    }; */
-
-    return { posts, loading, error, addPost, removePost };
+    return { addSearch, posts, loading, error, addPost, removePost };
 };
+
 export default usePosts; 
