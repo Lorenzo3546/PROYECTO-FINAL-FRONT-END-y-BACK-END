@@ -9,6 +9,8 @@ export const Header = () => {
             </h1>
             <h2>All your memories in one place</h2>
 
+            <button className="searchButton"><Link to="/search">Search</Link></button>
+
             <nav>
                 <Auth />
             </nav>

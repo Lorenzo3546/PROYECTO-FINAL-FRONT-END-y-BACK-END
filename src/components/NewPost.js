@@ -15,6 +15,7 @@ export const NewPost = ({ addPost }) => {
             setSending(true);
 
             const data = new FormData(e.target);
+            //data es un objeto que contiene los datos del fomulario
             const post = await sendPostService({ data, token });
             //este servicio manda los datos del formulario y el token
 

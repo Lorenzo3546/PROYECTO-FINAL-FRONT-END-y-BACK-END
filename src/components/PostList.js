@@ -28,4 +28,4 @@ export const PostList2 = ({ post }) => {
     ) : (
         <p>There are not posts yet...</p>
     );
-}; 
+};

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { EditProfile } from "./EditProfile";
+//import { EditProfile } from "./EditProfile";
 
 export const Auth = () => {
     const { user, logout } = useContext(AuthContext);
@@ -11,7 +11,7 @@ export const Auth = () => {
     return user ? (
         <p>
             Logged in as <Link to={`/user/info/${user.id}`}>{user.nick}</Link>{" "}
-            <button onClick={() => EditProfile()}>Edit profile</button>
+            {/*  <button onClick={() => EditProfile()}>Edit profile</button> */}
             <button onClick={() => logout()}>LogOut</button>
 
         </p>

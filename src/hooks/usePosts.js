@@ -7,6 +7,7 @@ const usePosts = (id) => {
     const [error, setError] = useState("");
 
 
+
     useEffect(() => {
         const loadPosts = async () => {
             try {
@@ -39,8 +40,14 @@ const usePosts = (id) => {
     //dinamico: para que elimine en post sin tener que recargar la pag.
     //el filtro es que se queden todos los post que su id !== a la que quiero borrar
 
+    /* const addComment = (text) => {
+        setPosts([text, ...text]); 
+    };
+    
+    const addComment = (comment) => {
+        setComments([comment, ...comments]); y poner arriba el estado
+    }; */
 
     return { posts, loading, error, addPost, removePost };
 };
-
 export default usePosts; 

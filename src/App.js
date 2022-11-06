@@ -11,6 +11,8 @@ import { LoginPage } from './pages/LoginPage';
 import { PostPage } from './pages/PostPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { UserPage } from './pages/UserPage';
+import { SearchPage } from './pages/SearchPage';
+import { LikesPage } from './pages/LikesPage';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/:id" element={<PostPage />} />
         <Route path="/user/info/:id" element={<UserPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/likes/:id" element={<LikesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 

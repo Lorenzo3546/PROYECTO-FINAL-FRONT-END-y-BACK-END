@@ -32,6 +32,7 @@ export const EditProfile = () => {
         }
     };
     return (
+
         <section>
             <h1>Modify your user info</h1>
             <form onSubmit={handleForm}>
