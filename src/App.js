@@ -13,6 +13,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { UserPage } from './pages/UserPage';
 import { SearchPage } from './pages/SearchPage';
 import { LikesPage } from './pages/LikesPage';
+import { EditProfilePage } from './pages/EditProfilePage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/user/info/:id" element={<UserPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/likes/:id" element={<LikesPage />} />
+        <Route path="/user/info" element={<EditProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 

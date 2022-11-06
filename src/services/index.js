@@ -184,8 +184,7 @@ export const dislikePostService = async ({ id, token }) => {
 };
 
 
-
-export const likeNumberService = async ({ id, token }) => {
+/* export const likeNumberService = async ({ id, token }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/likes/${id}`, {
         headers: {
             Authorization: token,
@@ -197,9 +196,9 @@ export const likeNumberService = async ({ id, token }) => {
     }
 
     console.log(json);
-    //console.log(json.data);
+    console.log(json.data);
     return json.data;
-};
+}; */
 
 
 export const sendCommentService = async (text, post_id, token) => {

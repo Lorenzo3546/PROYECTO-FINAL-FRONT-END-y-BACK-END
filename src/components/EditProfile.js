@@ -23,8 +23,6 @@ export const EditProfile = () => {
 
             Navigate("/login");
 
-            //addModify(datos);
-
         } catch (error) {
             setError(error.message);
         } finally {

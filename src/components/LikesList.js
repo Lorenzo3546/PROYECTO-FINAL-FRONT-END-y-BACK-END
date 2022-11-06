@@ -1,19 +1,10 @@
-import { useState } from "react";
-
-import { getLikesService } from "../services";
 
 
-export const LikesList = async ({ addLikes }) => {
-    const [error, setError] = useState("");
-
+export const LikesList = () => {
 
     try {
-        const results = await getLikesService({});
+    } catch {
 
-        addLikes(results);
-
-    } catch (error) {
-        setError(error.message);
     };
 
     return (

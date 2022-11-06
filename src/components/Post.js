@@ -1,9 +1,7 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { deletePostService, dislikePostService, likeNumberService, likePostService, sendCommentService } from "../services";
-
-
+import { deletePostService, dislikePostService, likePostService, sendCommentService } from "../services";
 
 
 export const Post = ({ post, removePost, addComment }) => {
@@ -11,9 +9,14 @@ export const Post = ({ post, removePost, addComment }) => {
     const { user, token } = useContext(AuthContext);
     const [error, setError] = useState("");
 
+    const numero = post.likes[0];
 
+    //console.log(numero);
+    //console.log(numero.likes);
 
     //console.log(post);
+    //console.log(post.comments);
+    //console.log(post.likes);
     //console.log(post.id);
     //const id = post.id;
 
@@ -34,16 +37,7 @@ export const Post = ({ post, removePost, addComment }) => {
 
                 const text = e.target.elements.text.value;
 
-                //console.log(text);
-
-                //console.log(post.id);
-
-                /* const response = await sendCommentService(text, post.id, token); */
-
                 await sendCommentService(text, post.id, token);
-                //const comment = await response;
-                //console.log(comment);
-                //addComment(response);
 
                 e.target.reset();
 
@@ -54,18 +48,33 @@ export const Post = ({ post, removePost, addComment }) => {
             }
         };
         return (
-            <form onSubmit={handleForm}>
-                <fieldset>
-                    <label htmlFor="text">Add new comment:</label>
-                    <input type="text" id="text" name="text" />
-                </fieldset>
+            <section>
+                <form onSubmit={handleForm}>
+                    <fieldset>
+                        <label htmlFor="text">Add new comment:</label>
+                        <input type="text" id="text" name="text" />
+                    </fieldset>
 
-                <button>Send Comment</button>
-                {sending ? <p>Sending...</p> : null}
-                {error ? <p>{error}</p> : null}
-            </form>
+                    <button>Send Comment</button>
+                    {sending ? <p>Sending...</p> : null}
+                    {error ? <p>{error}</p> : null}
+                </form>
+                <p>
+                    All comments:
+                    <ul>
+                        {post.comments.map(
+                            ({ id, nick, text }) => (
+                                <li key={id}>
+                                    By:@ {nick},
+                                    Comment: {text}
+                                </li>
+                            ))}
+                    </ul>
+                </p>
+            </section>
         );
     };
+
 
     const like = async (id) => {
         try {
@@ -74,7 +83,6 @@ export const Post = ({ post, removePost, addComment }) => {
             setError(error.message);
         }
     };
-
 
     const dislike = async (id) => {
         try {
@@ -85,40 +93,16 @@ export const Post = ({ post, removePost, addComment }) => {
     };
 
 
-    const likesNumber = async (id) => {
-        try {
-            const total = await likeNumberService({ id, token });
-
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-
-    /* const response = await getSearchService(query);
-    
-    const results = await response;
-    
-    addSearch(results); */
-    //console.log(likesNumber);
-    //console.log(user);
-    //console.log(post);
-    //console.log(post.comments);
-
-    const test = post.comments;
-
-    //console.log(test);
 
     return (
         <article>
             <p>By <Link to={`/${post.user_id}`}>{post.nick}
             </Link> on {new Date(post.created_at).toLocaleString()}
             </p>
-
             {post.image ? (
                 <img
                     src={`${process.env.REACT_APP_BACKEND}/uploads/${post.image}`}
-                    alt={post.text}
-                />
+                    alt={post.text} />
             ) : null}
 
             {post.text ? (<p>{post.text}</p>) : null}
@@ -134,36 +118,31 @@ export const Post = ({ post, removePost, addComment }) => {
                 </section>
             ) : null}
 
-            {token ? <NewComment addComment={addComment} /> : null}
 
-            {post.comments ? (
-                <section>
-                    <ul>
-                        {test.map(({ id, nick, text, created_at }) => (
-                            <li key={id}>
-                                By @{nick}
-                                Comment: {text}
-                                On {new Date(created_at).toLocaleString()}
-                            </li>
-                        ))}
-
-                    </ul>
-                </section>
-            ) : null}
-
+            {token ? <NewComment addComment={addComment}> </NewComment> : null}
 
             {token ? (
                 <section>
                     <button onClick={() => like(post.id)}>
                         Like
                     </button>
+
                     <button onClick={() => dislike(post.id)}>
                         Disike
                     </button>
-                    <p>
-                        <Link to={`/likes/${post.id}`}>xxx{likesNumber}Likes </Link>
-                    </p>
+
+                    {/* <p>
+                        <Link to={`/likes/${post.id}`}>xxx{post.likes[0]}Likes </Link>
+                    </p> */}
+
                     {error ? <p>{error}</p> : null}
+                </section>
+
+            ) : null}
+
+            {token ? (
+                <section>
+                    Total Likes: {numero.likes}
                 </section>
             ) : null}
 
