@@ -81,7 +81,7 @@ const getImageByDescription = async (text) => {
   
       const [imagen] = await connection.query(
         `
-        SELECT text FROM posts WHERE text LIKE ?
+        SELECT * FROM posts WHERE text LIKE ?
       `,
        [text]
       );
