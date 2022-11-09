@@ -121,6 +121,29 @@ const getAllPosts = async () => {
 
 const getImageByDescription = async (text) => {
     let connection;
+<<<<<<< HEAD
+=======
+  
+    try {
+      connection = await getConnection();
+  
+      const [imagen] = await connection.query(
+        `
+        SELECT * FROM posts WHERE text LIKE ?
+      `,
+       [text]
+      );
+  
+      if (imagen.length === 0) {
+        throw generateError(`La imagen con texto: ${text} no existe`, 404);
+      }
+  
+      return imagen;
+    } finally {
+      if (connection) connection.release();
+    }
+  };
+>>>>>>> 2a789269df3bbb2b73ab3f6110e594236480f0de
 
     try {
         connection = await getConnection();
