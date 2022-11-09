@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
+const joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
-const joi= require('joi')
 const { generateError } = require('../helpers');
-const { createUser, getUserById, getUserByEmail, modifyUser } = require('../db/users');
+const { createUser, getUserById, getUserByEmail, modifyUser, getMeUserById } = require('../db/users');
 
 
 const newUserController = async (req, res, next) => {
@@ -10,15 +10,17 @@ const newUserController = async (req, res, next) => {
 
         const { email, password, nick } = req.body;
 
-// Aqui falta usar joi 
-        if(!email || !password || !nick) {
-            throw generateError('Debes enviar un email y una password y tu nombre de perfil público', 400);
+
+        if (!email || !password || !nick) {
+            throw generateError('Debes enviar un email, una password y tu nombre de perfil', 400);
         }
+        // Verificamos alta del email con joi
         const schema = joi.string().email();
-        const validation = schema.validate (email);
-    
-        if (validation.error){
-          throw generateError('Debes enviar un email válido', 400);
+
+        const validation = schema.validate(email);
+
+        if (validation.error) {
+            throw generateError('Debes enviar un email valido', 400);
         }
 
         const id = await createUser(email, password, nick);
@@ -26,56 +28,76 @@ const newUserController = async (req, res, next) => {
             status: 'ok',
             message: `User created with id: ${id}`,
         });
-    } catch(error) {
+
+    } catch (error) {
         next(error);
     }
 };
 
+
+
+
 const getUserController = async (req, res, next) => {
     try {
 
-        const {id} = req.params; 
+        const { id } = req.params;
 
         const user = await getUserById(id);
 
 
         res.send({
             status: 'ok',
-            data: user, 
+            data: user,
         });
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 };
 
+
+const getMeController = async (req, res, next) => {
+    try {
+        const user = await getMeUserById(req.userId, false);
+
+        res.send({
+            status: 'ok',
+            data: user,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
 const loginController = async (req, res, next) => {
     try {
 
-    const { email, password } = req.body; 
-    
-    if(!email || !password) {
-    throw generateError('Debes enviar un email y una password', 400);
-}
+        const { email, password } = req.body;
 
-    const user = await getUserByEmail(email); 
+        if (!email || !password) {
+            throw generateError('Debes enviar un email y una password', 400);
+        }
 
-// Comprobamos que las contraseñas coinciden 
-    const validPassword = await bcrypt.compare(password, user.password); 
-    
-    if(!validPassword) {
-        throw generateError('La contraseña no coincide', 401);
-    }
-// Payload del token y firma del token 
-    const payload = {id: user.id};
-    const token = jwt.sign(payload, process.env.SECRET, {
-        expiresIn: '30d',
-    });
+        const user = await getUserByEmail(email);
+
+        // Comprobamos que las contraseñas coinciden 
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        if (!validPassword) {
+            throw generateError('La contraseña no coincide', 401);
+        }
+        // Payload del token y firma del token 
+        const payload = { id: user.id };
+        const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: '30d',
+        });
 
         res.send({
             status: 'ok',
             data: token,
         });
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 };
@@ -83,40 +105,28 @@ const loginController = async (req, res, next) => {
 const modifyUserController = async (req, res, next) => {
     try {
 
-        const {email, password, nick} = req.body; 
+        const { password, nick } = req.body;
+        const userId = req.userId;
 
-        const editedUser = await modifyUser(req.userId, email, password, nick);
+        await modifyUser(userId, password, nick);
 
 
         res.send({
             status: 'ok',
-            data: editedUser, 
+            message: `Datos de usuario modificados correctamente`,
         });
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 };
-
-const getLoggedUserController = async (req, res, next) => {
-    try {
-      const user = await getUserById(req.userId, false);
-  
-      res.send({
-        status: 'ok',
-        data: user,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
 
 
 
 module.exports = {
     newUserController,
-    getUserController, 
+    getUserController,
+    getMeController,
     loginController,
     modifyUserController,
-    getLoggedUserController
 };
+

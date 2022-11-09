@@ -1,5 +1,4 @@
 const fs = require('fs/promises');
-const { waitForDebugger } = require('inspector');
 
 
 const generateError = (message, status) => {

@@ -1,43 +1,22 @@
-const Joi = require("@hapi/joi");
 const { generateError } = require('../helpers');
-const { schema } = require("@hapi/joi/lib/compile");
-const { createLike, disLike, getUserId } = require("../db/likes");
-
-async function validate(payload) {
-    const schema = Joi.object({
-        postId: Joi.number().integer().positive().required(),
-    });
-    Joi.assert(payload, schema);
-}
-
+const { createLike, dislike, getLikes, totalLikes } = require("../db/likes");
 
 
 
 const likePostController = async (req, res, next) => {
     try {
-        const userId = req.userId; 
-        const { postId } = req.params; 
+        const userId = req.userId;
+        const { postId } = req.params;
+
+        await createLike(userId, postId);
 
 
-    try {
-        const datosAValidar = {
-            postId,
-        };
-        await validate(datosAValidar);
-    } catch (e) {
-        return res.status(400).send(e);
-    }
-    
-
-    const like = await createLike(userId, postId); 
-
-
-    res.send({
-        status: "ok",
-        data: like,
-    });
+        res.send({
+            status: "ok",
+            message: `like`,
+        });
     } catch (error) {
-      next(error);
+        next(error);
     }
 };
 
@@ -46,43 +25,67 @@ const likePostController = async (req, res, next) => {
 const dislikeController = async (req, res, next) => {
 
     try {
-        const userId = req.userId; 
+        const userId = req.userId;
 
-        const {postId} = req.params;
+        const { postId } = req.params;
 
-        console.log(postId);
-        console.log(userId);
+        //console.log(userId);
+        //console.log(postId);
 
-//conseguir la info del post que quiero borrar      
 
-       const likeUser = await getUserId(userId, postId);
+        //conseguir la info del like que quiero borrar      
 
-console.log(likeUser);
+        const likeUser = await getLikes(userId, postId);
 
-//comprobar que el usuario del token es el mismo que creo el like
+        //console.log(likeUser);
 
-        if(userId !== likeUser.user_id) {
-        throw generateError('Estas intentando borrar un like que no es tuyo', 401);
+        //comprobar que el usuario del token es el mismo que creo el like
+
+        if (userId !== likeUser.user_id) {
+            throw generateError('Estas intentando borrar un like que no es tuyo', 401);
         }
 
-//borrar el like
-        await disLike(userId, postId);
+        //borrar el like
+        await dislike(userId, postId);
 
         res.send({
             status: "ok",
             message: `El like fue eliminado`,
         });
     } catch (error) {
-      next(error);
+        next(error);
     }
-}; 
+};
 
 
+const likesController = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
 
+        const likesNumber = await totalLikes(postId);
+
+        //console.log(likesNumber);
+
+
+        const [total] = Object.values(likesNumber);
+
+
+        //console.log(total);
+
+
+        res.send({
+            status: "ok",
+            data: total,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 module.exports = {
-    likePostController, 
-   dislikeController,
+    likePostController,
+    dislikeController,
+    likesController,
 };
 

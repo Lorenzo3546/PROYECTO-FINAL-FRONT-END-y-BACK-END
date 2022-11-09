@@ -22,22 +22,27 @@ descripción.
 ○ Comentar una foto (no se permiten comentarios a comentarios)
 
 ENDPOINTS: 
-USERS
-. POST /user       Registro de usuario ✅
-. GET /user/:id    Devuelve info de un usuario ✅
-. POST /login      Login de usuario ✅
-. PUT /user/  Gestion del perfil(cambios en los datos de registro) ✅
 
-POSTS
+post('/user', newUserController); //Crear usuarios
+get('/user/info/:id', getUserController);//Obtener datos publicos de un usuarios
+post('/login', loginController); //Login de usuarios
+get('/user/info', authUser, getMeController); // Datos privados de un usuario logeado
+put('/user/info', authUser, modifyUserController); //Modificar datos privados de usuario
 
-. POST /           Subir una foto con descripcion (solo usuarios registrados) ✅
-. GET /            Lista de todas las fotos (ordenadas por fecha de publicacion) ✅
-. GET /post/:id    Ver perfil de usuario con su galeria de fotos ✅
-. GET /post/text/:text   Buscar una foto por su descripcion ✅
+get('/post/:id', getPostByIdController,); //Obtener un post por su id
+post('/', authUser, newPostController); //Crear un post
+get('/', getPostsController); //Obtener todos los posts
+get('/:id', getPostsUserController); //Obtener todos los posts de un usuario 
+get('/posts/imagenes/:texto', getImageByDescriptionController); //Obtener imagen por su descripcion
+delete('/post/:id', authUser, deletePostController); ///eliminar un post (ese id es el del post)
 
-. GET /likes       Hacer/quitar likes a una foto ✅
+post('/likes/:postId', authUser, likePostController); // Dar like a un post
+delete('/likes/:postId', authUser, dislikeController); //Sacar like de un post
+get('/likes/:postId', likesController); //Obtener info de los likes que tiene un post
 
-. POST /comments  Comentar una foto (OPCIONAL)✅
+post('/comments/:postId', authUser, createCommentController); //Comentar un post
+delete('/comments/:commentId', authUser, deleteCommentController); //elimiar comentario de un post 
+
 
 
 ENTIDADES: 
@@ -46,15 +51,14 @@ ENTIDADES:
 id
 email
 password
+nick
 created_at
-avatar
-public_profile
+
 
 . Posts: 
 id
 image
 text
-caption ¿?
 created_at
 user_id
 
@@ -69,3 +73,5 @@ text
 created_at
 user_id
 post_id
+
+
