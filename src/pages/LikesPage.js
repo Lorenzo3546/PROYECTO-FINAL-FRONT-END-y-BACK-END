@@ -27,7 +27,7 @@ export const LikesPage = () => {
 
     return (
         <section>
-            <p> Aquí listado de likes</p>
+            <p> Like List: </p>
 
             {user && likes.length ? (
                 <ul>
@@ -47,4 +47,4 @@ export const LikesPage = () => {
         </section>);
 };
 
-// <p>{JSON.stringify(likes)}</p>
+// <p>{JSON.stringify(likes)}</p> Lo uso para visualizar contenido en web

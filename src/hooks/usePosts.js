@@ -90,7 +90,7 @@ const usePosts = (id) => {
         const onePost = copiPost.find(post =>
             post.id === postId
         );
-        console.log(onePost);
+        //console.log(onePost);
         if (onePost.liked) {
             onePost.liked = false;
             onePost.likes--;

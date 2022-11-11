@@ -10,20 +10,16 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
     const { user, token } = useContext(AuthContext);
     const [error, setError] = useState("");
 
-
-    //console.log(numero);
-    //console.log(numero.likes);
-
     const comments = post.comments;
-    //const likes = post.likes;
 
+    //const likes = post.likes;
     //console.log(comments);
     //console.log(likes); 
     //console.log(post);
     //console.log(post.comments);
     //console.log(post.likes);
     //console.log(post.id);
-    //const id = post.id;
+
 
     const deletePost = async (id) => {
         try {
@@ -120,22 +116,8 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
         }
     };
 
-    /* const dislike = async (id) => {
-        try {
-            await dislikePostService({ id, token });
-        } catch (error) {
-            setError(error.message);
-        }
-    }; */
 
-
-
-    //console.log(numero);
     //console.log(post.likes);
-    //console.log(post.likes[0]);
-    //console.log(post.likes.likes);
-    //console.log(post.likes.slice(0, 1));
-    //const numero = post.likes.slice(0, 1);
     //console.log(post);
     //console.log(post.nick);
     //tarda en llegar el dato ojo
@@ -200,13 +182,6 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
 
                     </button>
 
-                    {/* <button onClick={() => dislike(post.id)}>
-                        Disike
-                    </button> */}
-
-                    {/* <p>
-                        <Link to={`/likes/${post.id}`}>xxx{post.likes[0]}Likes </Link>
-                    </p> */}
 
                     {error ? <p>{error}</p> : null}
                 </section>
@@ -221,9 +196,6 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
                 </section>
             ) : null}
 
-            {/*  {token && !numero.likes ? (
-                <p>Likes: 0</p>
-            ) : null} */}
 
         </article>
     );

@@ -9,7 +9,7 @@ export const PostPage = () => {
     const { id } = useParams();
     //console.log(params);  nos devuele el id de la ruta 
 
-    //const { post, loading, error } = usePost(id);
+
     const { posts, loading, error, removePost, addComment, deleteComment, toggleLike } = usePosts(id);
 
     //console.log(posts);
@@ -24,23 +24,3 @@ export const PostPage = () => {
         </section>
     );
 };
-
-
-
-
-
-/* { sending ? <p>Sending Post</p> : null; }
-{ error ? <p>{error}</p> : null; }
-
-{
-    user && user.id === post.user_id ? (
-        <section>
-            <button onClick={() => {
-                if (window.confirm("Are you sure?")) deletePost(post.id);
-            }}
-            >Delete post
-            </button>
-            {error ? <p>{error}</p> : null}
-        </section>
-    ) : null;
-} */

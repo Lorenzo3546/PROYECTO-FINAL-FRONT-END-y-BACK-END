@@ -184,23 +184,6 @@ export const dislikePostService = async ({ id, token }) => {
 };
 
 
-/* export const likeNumberService = async ({ id, token }) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/likes/${id}`, {
-        headers: {
-            Authorization: token,
-        }
-    });
-    const json = await response.json();
-    if (!response.ok) {
-        throw new Error(json.message);
-    }
-
-    console.log(json);
-    console.log(json.data);
-    return json.data;
-}; */
-
-
 export const sendCommentService = async (text, post_id, token) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/comments/${post_id}`, {
         method: "POST",
@@ -225,7 +208,7 @@ export const sendCommentService = async (text, post_id, token) => {
 
 export const deleteCommentService = async (id, token) => {
 
-    console.log(token);
+    //console.log(token);
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/comments/${id}`, {
         method: "DELETE",
         headers: {
@@ -267,7 +250,7 @@ export const getLikesService = async (id) => {
     }
 
 
-    console.log(json.data);
+    //console.log(json.data);
     return json.data;
 };
 
