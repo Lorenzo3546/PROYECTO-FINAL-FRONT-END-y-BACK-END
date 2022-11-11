@@ -1,5 +1,5 @@
 const { generateError } = require('../helpers');
-const { createLike, dislike, getLikes, totalLikes } = require("../db/likes");
+const { createLike, dislike, getLikes, infoLikes } = require("../db/likes");
 
 
 
@@ -9,7 +9,6 @@ const likePostController = async (req, res, next) => {
         const { postId } = req.params;
 
         await createLike(userId, postId);
-
 
         res.send({
             status: "ok",
@@ -62,20 +61,13 @@ const likesController = async (req, res, next) => {
     try {
         const { postId } = req.params;
 
-        const likesNumber = await totalLikes(postId);
+        const data = await infoLikes(postId);
 
-        //console.log(likesNumber);
-
-
-        const [total] = Object.values(likesNumber);
-
-
-        //console.log(total);
-
+        //console.log(data);
 
         res.send({
             status: "ok",
-            data: total,
+            data: data,
         });
     } catch (error) {
         next(error);

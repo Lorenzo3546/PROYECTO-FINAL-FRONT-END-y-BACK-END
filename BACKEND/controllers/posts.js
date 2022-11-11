@@ -7,6 +7,7 @@ const { generateError } = require('../helpers');
 
 
 
+
 const newPostController = async (req, res, next) => {
     try {
 
@@ -46,8 +47,7 @@ const newPostController = async (req, res, next) => {
         res.send({
             status: 'ok',
             message: `Post con id: ${id} creado correctamente`,
-            data: { id, text, image: imageFileName }
-
+            data: { id, text, image: imageFileName, likes: 0, liked: false, created_at: new Date(), comments: [], user_id: req.userId }
 
         });
     } catch (error) {

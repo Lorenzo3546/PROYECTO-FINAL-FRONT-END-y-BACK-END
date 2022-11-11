@@ -11,6 +11,7 @@ const {
     loginController,
     modifyUserController,
     getMeController,
+    getUserLikesController,
 } = require('./controllers/users');
 
 
@@ -56,6 +57,7 @@ app.get('/user/info/:id', getUserController);//Obtener datos publicos de un usua
 app.post('/login', loginController); //Login de usuarios
 app.get('/user/info', authUser, getMeController); // Datos privados de un usuario logeado
 app.put('/user/info', authUser, modifyUserController); //Modificar datos privados de usuario
+app.get('/user/likes', authUser, getUserLikesController); //Info de likes de un usuario
 
 app.get('/post/:id', getPostByIdController,); //Obtener un post por su id
 app.post('/', authUser, newPostController); //Crear un post
@@ -66,7 +68,7 @@ app.delete('/post/:id', authUser, deletePostController); ///eliminar un post (es
 
 app.post('/likes/:postId', authUser, likePostController); // Dar like a un post
 app.delete('/likes/:postId', authUser, dislikeController); //Sacar like de un post
-app.get('/likes/:postId', likesController); //Obtener info de los likes que tiene un post
+app.get('/likes/:postId', likesController); //Obtener info de los likes
 
 app.post('/comments/:postId', authUser, createCommentController); //Comentar un post
 app.delete('/comments/:commentId', authUser, deleteCommentController); //elimiar comentario de un post 
@@ -95,7 +97,7 @@ app.use((error, req, res, next) => {
 
 
 // Lanzamos servidor 
-app.listen(3003, () => {
+app.listen(3002, () => {
     console.log('Servidor funcionando✔');
 });
 

@@ -78,7 +78,7 @@ const getLikes = async (userId, postId) => {
 
 
 
-const totalLikes = async (postId) => {
+/* const totalLikes = async (postId) => {
     let connection;
 
     try {
@@ -95,15 +95,40 @@ const totalLikes = async (postId) => {
     } finally {
         if (connection) connection.release();
     }
+}; */
+
+const infoLikes = async (postId) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        const [result] = await connection.query(
+            `
+        SELECT l.created_at, user_id, post_id, nick FROM likes l LEFT JOIN users u on user_id = u.id WHERE post_id =? GROUP BY user_id
+        `,
+            [postId]);
+
+        if (result.length === 0) {
+            throw generateError(`Error`, 404);
+        }
+
+        //console.log(result);
+        return result;
+
+
+    } finally {
+        if (connection) connection.release();
+    }
 };
 
-
+//SELECT l.created_at, user_id, post_id, nick FROM likes l LEFT JOIN users u on user_id = u.id WHERE post_id =? GROUP BY user_id;
 
 
 module.exports = {
     createLike,
     dislike,
     getLikes,
-    totalLikes,
+    infoLikes,
 };
 

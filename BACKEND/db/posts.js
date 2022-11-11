@@ -1,4 +1,4 @@
-const { text } = require('express');
+//const { text } = require('express');
 const { generateError } = require('../helpers');
 const { getConnection } = require('./db');
 
@@ -86,71 +86,48 @@ const getAllPosts = async () => {
         const [result] = await connection.query(`
         SELECT p.id,user_id,image, text,p.created_at, nick FROM posts p LEFT JOIN users u on user_id = u.id ORDER BY created_at DESC
         `);
+
+
+        for (const post of result) {
+            const [comments] = await connection.query(`
+        SELECT text, c.id, user_id, c.created_at, post_id, nick  FROM comments c LEFT JOIN users u on user_id=u.id WHERE post_id = ?`,
+                [post.id]
+            );
+            post.comments = comments;
+        }
+
+        for (const post of result) {
+            const [likes] = await connection.query(`
+   
+           SELECT COUNT(DISTINCT user_id)as likes FROM likes where post_id = ?
+           `,
+                [post.id]);
+            post.likes = likes[0].likes;
+
+        }
+        //post.comments = comments;  [post.id]
+        //return result[0]
+
+        //console.log(result);
         return result;
 
     } finally {
         if (connection) connection.release();
     }
 };
-
-
-
-/* const getImageByDescription = async () => {
-    let connection;
-
-    try {
-        connection = await getConnection();
-
-        const [imagen] = await connection.query(
-            `
-        SELECT text as descripcion FROM posts WHERE text LIKE = ?
-      `,
-            [text]
-        );
-
-        if (imagen.length === 0) {
-            throw generateError(`La imagen con texto: ${text} no existe`, 404);
-        }
-
-        return imagen;
-    } finally {
-        if (connection) connection.release();
-    }
-};
- */
+//SELECT p.id,user_id,image, text,p.created_at, nick FROM posts p LEFT JOIN users u on user_id = u.id ORDER BY created_at DESC
+//SELECT p.id,p.user_id,image, p.text,p.created_at, nick, c.text, c.created_at,c.user_id, c.post_id FROM posts p LEFT JOIN users u on p.user_id = u.id LEFT JOIN comments c on p.id = c.post_id ORDER BY p.created_at DESC
+//SELECT * FROM posts WHERE text LIKE ?
 
 const getImageByDescription = async (text) => {
     let connection;
-<<<<<<< HEAD
-=======
-  
-    try {
-      connection = await getConnection();
-  
-      const [imagen] = await connection.query(
-        `
-        SELECT * FROM posts WHERE text LIKE ?
-      `,
-       [text]
-      );
-  
-      if (imagen.length === 0) {
-        throw generateError(`La imagen con texto: ${text} no existe`, 404);
-      }
-  
-      return imagen;
-    } finally {
-      if (connection) connection.release();
-    }
-  };
->>>>>>> 2a789269df3bbb2b73ab3f6110e594236480f0de
 
     try {
         connection = await getConnection();
 
         const [imagen] = await connection.query(
             `
-        SELECT * FROM posts WHERE text LIKE ?
+        SELECT p.id,user_id,image, text,p.created_at, nick FROM posts p LEFT JOIN users u on user_id = u.id WHERE text LIKE ? ORDER BY created_at DESC 
       `,
             [text]
         );
@@ -173,6 +150,18 @@ const deletePost = async (id) => {
 
     try {
         connection = await getConnection();
+
+        await connection.query(
+            `
+    DELETE FROM comments WHERE post_id = ?
+    `,
+            [id]);
+
+        await connection.query(
+            `
+    DELETE FROM likes WHERE post_id = ?
+    `,
+            [id]);
 
         await connection.query(
             `

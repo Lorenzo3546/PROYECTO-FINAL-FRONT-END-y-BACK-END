@@ -1,18 +1,50 @@
-import { useState } from "react";
-import { LikesList } from "../components/LikesList";
 
-//import { PostList } from "../components/PostList";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { getLikesService } from "../services";
 
+const likesInfo = async (id, setLikes) => {
+    try {
+        const result = await getLikesService(id);
+        setLikes(result);
+    } catch {
+
+    }
+};
 
 export const LikesPage = () => {
-    const [totalLikes, setTotalLikes] = useState([]);
+
+    const { id } = useParams();
+    const [likes, setLikes] = useState([]);
+    const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        likesInfo(id, setLikes);
+    }, [id]);
+
+    //console.log(likes);
 
     return (
         <section>
+            <p> Aquí listado de likes</p>
 
-            <p>listado de likes</p>
-            {/*<LikesList addLikes={setTotalLikes} />*/}
-            {/*  <PostList posts={searchResults/totalLikes} /> */}
-        </section>
-    );
+            {user && likes.length ? (
+                <ul>
+                    {likes.map((like) => (
+                        <li key={like.user_id}>
+                            On {new Date(like.created_at).toLocaleString()} {like.nick} send a like
+
+                        </li>
+                    ))}
+
+                </ul>
+            ) : (
+                <p>There are not likes yet...</p>
+            )
+
+            }
+        </section>);
 };
+
+// <p>{JSON.stringify(likes)}</p>

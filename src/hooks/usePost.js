@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/* import { useEffect, useState } from "react";
 import { getPostsUserService } from "../services";
 
 const usePost = (id) => {
@@ -26,4 +26,4 @@ const usePost = (id) => {
     return { post, loading, error };
 };
 
-export default usePost; 
+export default usePost;  */

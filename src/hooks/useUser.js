@@ -12,7 +12,11 @@ const useUser = (id) => {
             try {
                 setLoading(true);
                 const data = await getUserDataService(id);
+
                 setUser(data);
+
+                //console.log(data); correcto
+
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -24,4 +28,4 @@ const useUser = (id) => {
     return { user2, loading, error };
 };
 export default useUser;
-//este hook me da la info un usuario 
+//este hook me da la info un usuario cualquiera(user2)

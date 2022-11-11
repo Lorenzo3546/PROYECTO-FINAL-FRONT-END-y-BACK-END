@@ -38,7 +38,7 @@ async function main() {
             image CHAR(255) NOT NULL, 
             text VARCHAR(500) NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE 
+            FOREIGN KEY (user_id) REFERENCES users(id)
         );
         `);
 
@@ -50,20 +50,20 @@ async function main() {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             user_id INTEGER NOT NULL, 
             post_id INTEGER NOT NULL, 
-            FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE CASCADE ,
-            FOREIGN KEY (post_id) REFERENCES posts (id) ON UPDATE CASCADE 
+            FOREIGN KEY (user_id) REFERENCES users (id),
+            FOREIGN KEY (post_id) REFERENCES posts (id)
         );
         `);
 
 
         await connection.query(`
         CREATE TABLE likes (
-            id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             user_id INT NOT NULL, 
             post_id INT NOT NULL, 
-            FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE CASCADE ,
-            FOREIGN KEY (post_id) REFERENCES posts (id) ON UPDATE CASCADE 
+            FOREIGN KEY (user_id) REFERENCES users (id),
+            FOREIGN KEY (post_id) REFERENCES posts (id)
         );
         `);
 

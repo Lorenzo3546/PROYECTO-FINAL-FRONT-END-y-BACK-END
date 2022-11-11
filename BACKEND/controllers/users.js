@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../helpers');
-const { createUser, getUserById, getUserByEmail, modifyUser, getMeUserById } = require('../db/users');
+const { createUser, getUserById, getUserByEmail, modifyUser, getMeUserById, getUserLikes } = require('../db/users');
 
 
 const newUserController = async (req, res, next) => {
@@ -121,6 +121,24 @@ const modifyUserController = async (req, res, next) => {
 };
 
 
+const getUserLikesController = async (req, res, next) => {
+    try {
+
+        const userId = req.userId;
+
+        const data = await getUserLikes(userId);
+
+
+        res.send({
+            status: 'ok',
+            data: data,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 
 module.exports = {
     newUserController,
@@ -128,5 +146,6 @@ module.exports = {
     getMeController,
     loginController,
     modifyUserController,
+    getUserLikesController
 };
 

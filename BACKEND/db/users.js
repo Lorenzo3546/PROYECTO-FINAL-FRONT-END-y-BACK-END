@@ -125,11 +125,31 @@ const modifyUser = async (userId, password = '', nick = '') => {
 };
 
 
+const getUserLikes = async (id) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+        const [result] = await connection.query(`
+        SELECT post_id FROM likes WHERE user_id=?
+        `, [id]);
+
+        return result.map(post =>
+            post.post_id);
+
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+
+
 module.exports = {
     createUser,
     getUserById,
     getMeUserById,
     getUserByEmail,
     modifyUser,
+    getUserLikes,
 };
 

@@ -13,14 +13,12 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { UserPage } from './pages/UserPage';
 import { SearchPage } from './pages/SearchPage';
 import { LikesPage } from './pages/LikesPage';
-import LikeDislikePage from './pages/LikeDislikePage';
-//import { SearchImagesForm } from './components/SearchImagesForm';
+import { EditProfilePage } from './pages/EditProfilePage';
 
 function App() {
   return (
     <main>
       <Header />
-      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -29,8 +27,7 @@ function App() {
         <Route path="/user/info/:id" element={<UserPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/likes/:id" element={<LikesPage />} />
-        <Route path="/likedislike" element={<LikeDislikePage />} />
-
+        <Route path="/user/info" element={<EditProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 

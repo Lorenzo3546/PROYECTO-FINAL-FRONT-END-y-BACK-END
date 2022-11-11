@@ -8,5 +8,6 @@ export const UserPosts = ({ id }) => {
     if (loading) return <p>Loading posts...</p>;
     if (error) return <ErrorMessage message={error} />;
 
+    //console.log(removePost);
     return <PostList posts={posts} removePost={removePost} />;
 };

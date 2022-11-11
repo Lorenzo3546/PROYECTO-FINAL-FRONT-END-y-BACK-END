@@ -21,21 +21,10 @@ export const getPostsUserService = async (id) => {
     if (!response.ok) {
         throw new Error(json.message);
     }
+
     return json.data;
 };
 
-
-/* export const getSinglePostService = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/post/${id}`);
-
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw new Error(json.message);
-    }
-    return json.data;
-
-}; */
 
 export const registerUserService = async ({ email, password, nick }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/user`, {
@@ -87,17 +76,6 @@ export const getMyUserDataService = async ({ token }) => {
     return json.data;
 };
 
-//permite leer los datos de cualquier usuario
-export const getUserDataService = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info/${id}`);
-
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw new Error(json.message);
-    }
-    return json.data;
-};
 
 
 export const sendPostService = async ({ data, token }) => {
@@ -114,8 +92,12 @@ export const sendPostService = async ({ data, token }) => {
     if (!response.ok) {
         throw new Error(json.message);
     }
+
+    //console.log(json);
     return json.data;
+
 };
+//devuelve el nuevo post con su info, que ya lo usamos sin tener que recargar la pag!
 
 
 export const deletePostService = async ({ id, token }) => {
@@ -132,9 +114,7 @@ export const deletePostService = async ({ id, token }) => {
     }
 
     //no devolvemos nada
-
-    
-}
+};
 
 export const putModifyUserService = async ({ password, nick, token }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info`, {
@@ -153,20 +133,28 @@ export const putModifyUserService = async ({ password, nick, token }) => {
     }
     //return json.data;
 };
-//modifica da
-export const getSearchService = async (text) => {
-    
-    const response = await fetch(`${process.env.REACT_APP_BACKEND}/posts/imagenes/${text}`);
+//modifica datos pero no devolvemos nada 
+
+
+
+
+//permite leer los datos de cualquier usuario-no uso- 
+export const getUserDataService = async (id) => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/info/${id}`);
 
     const json = await response.json();
 
     if (!response.ok) {
         throw new Error(json.message);
     }
+    //console.log(json);
+    //console.log(json.data);
     return json.data;
+
 };
 
-export const getLikesService = async ({ id, token }) => {
+
+export const likePostService = async ({ id, token }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/likes/${id}`, {
         method: "POST",
         headers: {
@@ -196,8 +184,7 @@ export const dislikePostService = async ({ id, token }) => {
 };
 
 
-
-export const likeNumberService = async ({ id, token }) => {
+/* export const likeNumberService = async ({ id, token }) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/likes/${id}`, {
         headers: {
             Authorization: token,
@@ -209,9 +196,10 @@ export const likeNumberService = async ({ id, token }) => {
     }
 
     console.log(json);
-    //console.log(json.data);
+    console.log(json.data);
     return json.data;
-};
+}; */
+
 
 export const sendCommentService = async (text, post_id, token) => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND}/comments/${post_id}`, {
@@ -229,8 +217,77 @@ export const sendCommentService = async (text, post_id, token) => {
         throw new Error(json.message);
     }
 
-    //console.log(json);
     //console.log(json.data);
-    //return json;
+    return json.data;
 
+};
+
+
+export const deleteCommentService = async (id, token) => {
+
+    console.log(token);
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/comments/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: token,
+        }
+    });
+
+    const json = await response.json();
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+};
+
+
+
+
+export const getSearchService = async (text) => {
+
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/posts/imagenes/${text}`);
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+    return json.data;
+};
+
+
+export const getLikesService = async (id) => {
+
+    //console.log(id);
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/likes/${id}`);
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+
+
+    console.log(json.data);
+    return json.data;
+};
+
+
+
+
+export const getUserLikesService = async (token) => {
+
+    //console.log(token);
+    const response = await fetch(`${process.env.REACT_APP_BACKEND}/user/likes`, {
+        method: "GET",
+        headers: {
+            Authorization: token,
+        }
+    });
+
+    const json = await response.json();
+    if (!response.ok) {
+        throw new Error(json.message);
+    }
+
+    return json.data;
 };

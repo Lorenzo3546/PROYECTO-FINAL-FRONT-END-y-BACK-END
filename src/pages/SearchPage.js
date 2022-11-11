@@ -4,13 +4,13 @@ import { PostList } from "../components/PostList";
 
 
 export const SearchPage = () => {
-    const [searchResults, setSearchResults] = useState ([]);
+    const [searchResults, setSearchResults] = useState([]);
 
     return (
         <section>
-            
+
             <SearchImagesForm addSearch={setSearchResults} />
-            <PostList posts={searchResults}/>
+            <PostList posts={searchResults} />
         </section>
     );
 };

@@ -15,14 +15,15 @@ const createCommentController = async (req, res, next) => {
 
         const { postId } = req.params;
 
-
         const id = await createComment(text, userId, postId);
 
 
         res.send({
             status: 'ok',
             message: `Comment con id: ${id} creado correctamente`,
+            data: { id, text }
         });
+
     } catch (error) {
         next(error);
     }

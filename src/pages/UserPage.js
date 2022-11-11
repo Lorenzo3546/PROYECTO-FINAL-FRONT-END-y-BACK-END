@@ -22,3 +22,16 @@ export const UserPage = () => {
         </section>
     );
 };
+
+
+/* {
+    user && user.id === user2.id ? (
+        <section>
+            <button onClick={() => {
+                EditProfile()}
+            >Edit Profile
+            </button>
+            {error ? <p>{error}</p> : null}
+        </section>
+    ) : null;
+} */
