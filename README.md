@@ -14,5 +14,5 @@ Y por otro lado tenemos a los usuarios registrados, estos podrán realizar, adem
 
 -Pueden dar like, y ver que otros usuarios han dado like
 
--Pueden gestionar su perfil
+
 
