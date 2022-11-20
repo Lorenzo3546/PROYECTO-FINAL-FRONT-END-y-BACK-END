@@ -24,7 +24,7 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
     const deletePost = async (id) => {
         try {
             await deletePostService({ id, token });
-            console.log(removePost);
+            //console.log(removePost);
             removePost(id);
         } catch (error) {
             setError(error.message);
@@ -60,17 +60,7 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
             }
         };
         return (
-            <section>
-                <form onSubmit={handleForm}>
-                    <fieldset>
-                        <label htmlFor="text">Add new comment:</label>
-                        <input type="text" id="text" name="text" />
-                    </fieldset>
-
-                    <button>Send Comment</button>
-                    {sending ? <p>Sending...</p> : null}
-                    {error ? <p>{error}</p> : null}
-                </form>
+            <section className="comments">
                 <section>
                     <ul>
                         {comments?.map(
@@ -80,13 +70,13 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
                                     Comment: {text}
                                     {user && user.id === user_id ? (
                                         <section>
-                                            <button onClick={() => {
-                                                if (window.confirm("Are you sure?")) {
+                                            <button className="deleteButton" onClick={() => {
+                                                if (window.confirm("Are you sure to delete this comment?")) {
                                                     deleteCommentService(id, token);
                                                     deleteComment(id, post.id);
                                                 }
                                             }}
-                                            >Delete comment
+                                            >
                                             </button>
                                             {error ? <p>{error}</p> : null}
                                         </section>
@@ -96,6 +86,15 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
 
                     </ul>
                 </section>
+                <form onSubmit={handleForm}>
+                    <fieldset>
+                        <label htmlFor="text">Add new comment:</label>
+                        <textarea type="text" id="text" name="text" />
+                    </fieldset>
+                    <button className="sendButton"></button>
+                    {sending ? <p>Sending...</p> : null}
+                    {error ? <p>{error}</p> : null}
+                </form>
             </section>
         );
     };
@@ -123,10 +122,10 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
     //tarda en llegar el dato ojo
 
     return (
-        <article>
+        <article className="card">
 
 
-            <p>
+            <p className="header">
                 By <Link to={`/${post.user_id}`}>{post.nick ?? user.nick}
                 </Link> on {new Date(post.created_at).toLocaleString()}
             </p>
@@ -137,25 +136,22 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
                     alt={post.text} />
             ) : null}
 
-            {post.text ? (<p>{post.text}</p>) : null}
+            {post.text ? (<p className="texto">{post.text}</p>) : null}
 
             {user && user.id === post.user_id ? (
                 <section>
-                    <button onClick={() => {
-                        if (window.confirm("Are you sure?")) deletePost(post.id);
+                    <button className="deleteButton" onClick={() => {
+                        if (window.confirm("Are you sure to delete this post?")) deletePost(post.id);
                     }}
-                    >Delete post
+                    >
                     </button>
                     {error ? <p>{error}</p> : null}
                 </section>
             ) : null}
 
 
-            {token ? <NewComment addComment={addComment}>
-            </NewComment> : null}
-
-            {token ? (
-                <section>
+            {token && toggleLike ? (
+                <section className="likes">
                     <button className={post.liked ? "liked like" : "like"} onClick={({ target }) => like(post.id, post.liked, post.id)}>
                         Like
                         <svg
@@ -181,20 +177,18 @@ export const Post = ({ post, removePost, addComment, deleteComment, toggleLike }
                         </svg>
 
                     </button>
-
-
+                    <section className="numberlikes">
+                        <Link to={`/likes/${post.id}`}>
+                            Likes:</Link> {post.likes}
+                    </section>
                     {error ? <p>{error}</p> : null}
                 </section>
 
             ) : null}
 
 
-            {token ? (
-                <section>
-                    <Link to={`/likes/${post.id}`}>
-                        Likes:</Link> {post.likes}
-                </section>
-            ) : null}
+            {token && addComment ? <NewComment addComment={addComment}>
+            </NewComment> : null}
 
 
         </article>

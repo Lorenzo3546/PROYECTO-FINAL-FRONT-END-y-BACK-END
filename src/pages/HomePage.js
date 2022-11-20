@@ -21,7 +21,7 @@ export const HomePage = () => {
 
             {user ? <NewPost addPost={addPost} /> : null}
 
-            <h1>Latest Posts</h1>
+
 
             <PostList posts={posts} removePost={removePost} addComment={addComment} deleteComment={deleteComment} toggleLike={toggleLike} />
 

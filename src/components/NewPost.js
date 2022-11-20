@@ -35,11 +35,10 @@ export const NewPost = ({ addPost }) => {
     };
     return (
         <form onSubmit={handleForm}>
-            <h1>Add new Post</h1>
 
             <fieldset>
-                <label htmlFor="text">Text and hashtag</label>
-                <input type="text" id="text" name="text" />
+                <label htmlFor="text">New Post</label>
+                <textarea placeholder="Text #hashtag" type="text" id="text" name="text" />
             </fieldset>
 
             <fieldset>

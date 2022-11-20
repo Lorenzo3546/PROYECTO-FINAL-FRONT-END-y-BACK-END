@@ -1,58 +1,215 @@
-.App {
-  text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+* {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+body {
+  margin: 0;
+  font-family: 'Amatic SC', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale, sans-serif;
+  font-size: larger;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: blue;
+}
+
+
+img {
+  min-height: 100%;
+  max-width: 100%;
+}
+
+header {
+  color: white;
+  background-color: var(--bg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  color: white;
+  width: 100%;
+  height: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.1rem solid black;
+}
+
+input {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+}
+
+::placeholder {
+  color: rgb(63, 61, 61);
+}
+
+textarea {
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+/* LISTADO DE POSTS */
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 20px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+li {
+  list-style: none;
+
 }
 
 
 
-/* .liked {
-  background-color: grey;
-  transition: background-color 1s;
-} */
+.card {
+  display: grid;
+  grid-template-columns: 10rem 1fr 1rem;
+  grid-template-rows: 1.5rem 1fr 3rem 4rem 1fr;
+  grid-template-areas:
+    "header header header"
+    "img img img"
+    "parr parr delete"
+    "like like like"
+    "com com com"
+}
 
+
+.header {
+  grid-area: header;
+}
+
+img {
+  grid-area: img;
+}
+
+.texto {
+  grid-area: parr;
+}
+
+.deleteButton {
+  grid-area: delete;
+}
+
+.likes {
+  grid-area: like;
+  padding-left: 0.5rem;
+}
+
+.comments {
+  grid-area: com;
+}
+
+
+
+/* BUTTON */
+
+
+.searchButton {
+  background-color: black;
+  border: 0.5px solid black;
+
+  border-radius: 5px;
+  margin-left: 10%;
+}
+
+
+.searchImageButton {
+
+  display: flex;
+  margin-left: 20%;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+
+
+.deleteButton {
+  background-image: url(/public/papelera.png);
+  height: 40px;
+  width: 40px;
+  margin: 1px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* border: 0.5px solid white; */
+  /* border-radius: 5px; */
+}
+
+.sendButton {
+  background-image: url(/public/avion.png);
+  height: 20px;
+  width: 20px;
+  margin-top: 1px;
+  margin-left: 1px;
+  margin-left: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  border-radius: 5px;
+}
+
+
+.button {
+  width: 150px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 4px;
+}
+
+.button:focus {
+  outline: none;
+}
+
+button {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border: none;
+}
+
+/* LIKES */
 
 button.like {
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   background: transparent;
   border: none;
   cursor: pointer;
   font-size: 0;
+  margin-left: 2%;
 }
 
 .like svg {

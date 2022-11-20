@@ -40,7 +40,7 @@ export const SearchImagesForm = ({ addSearch }) => {
                 <label htmlFor="search">Search Images</label>
                 <input id="search" name="search" type="search"></input>
 
-                <button type="submit">Search</button>
+                <button className="searchImageButton" type="submit">Search</button>
                 {sending ? <p>Sending Post</p> : null}
                 {error ? <p>{error}</p> : null}
             </form>

@@ -4,7 +4,7 @@ export const PostList = ({ posts, removePost, addComment, deleteComment, toggleL
 
     //console.log(posts);
     return posts.length ? (
-        <ul>
+        <ul className="posts">
             {posts.map((post) => (
                 <li key={post.id}>
                     <Post post={post} removePost={removePost} addComment={addComment} deleteComment={deleteComment} toggleLike={toggleLike} />
@@ -16,6 +16,16 @@ export const PostList = ({ posts, removePost, addComment, deleteComment, toggleL
         <p>There are not posts yet...</p>
     );
 };
+
+
+
+
+
+
+
+
+
+
 
 /* export const PostList2 = ({ post }) => {
     return post.length ? (
